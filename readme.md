@@ -93,9 +93,7 @@ PiiAudit
 
 ## What I would improve with more time
 
-- **Prometheus + Grafana** — expose `/metrics` endpoint and build real-time Grafana dashboards for latency percentiles, throughput, and error rates
 - **OpenTelemetry** — add distributed tracing so you can see the full trace: `user request → chat-api → LLM call → ingestion → kafka → db`
-- **Cost calculator** — token count × price per model = exact dollar/rupee cost per conversation shown in the UI
 - **Streaming token count** — OpenAI sends token usage only at the end of a stream. With more time, estimate tokens mid-stream using tiktoken
 - **Conversation search** — full text search across message content using Postgres `tsvector`
 - **Alert system** — notify on Slack/email when error rate exceeds threshold or latency spikes
