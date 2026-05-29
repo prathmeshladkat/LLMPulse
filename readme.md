@@ -10,33 +10,7 @@ Most teams using LLMs in production have no visibility into what's happening. Th
 
 ## Architecture at a glance
 
-```
-User → Frontend (React)
-           |
-           v
-      Chat API (Node/Express)
-           |
-      LLM SDK Wrapper
-      [captures latency, tokens, status]
-           |
-           ├──→ LLM Provider (OpenAI / Claude / Gemini)
-           |
-           └──→ Outbox Queue (in-memory, flushes every 2s)
-                      |
-                      v
-             Ingestion API (FastAPI)
-             [validates, redacts PII, stores]
-                      |
-                      ├──→ PostgreSQL (inference_logs, messages)
-                      |
-                      └──→ Kafka Topic: inference-logs
-                                   |
-                                   ├──→ Metadata Extractor Worker
-                                   |    [cost, tokens/sec, latency bucket]
-                                   |
-                                   └──→ DLQ Handler
-                                        [failed events → retry]
-```
+![Project Architecture](assets/architecture.png)
 
 ## Key features
 
