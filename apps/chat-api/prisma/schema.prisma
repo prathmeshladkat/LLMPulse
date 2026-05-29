@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Conversation {
+  id        String   @id @default(uuid())
+  title     String   @default("New Conversation")
+  provider  String   @default("anthropic")
+  model     String   @default("claude-sonnet-4-20250514")
+  status    String   @default("active")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  messages      Message[]
+  inferenceLogs InferenceLog[]
+
+  @@map("conversations")
+}
+
+model Message {
+  id             String   @id @default(uuid())
+  conversationId String   @map("conversation_id")
+  role           String
+  content        String
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  conversation Conversation  @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  inferenceLog InferenceLog?
+
+  @@map("messages")
+}
+
+model InferenceLog {
+  id             String   @id @default(uuid())
+  conversationId String?  @map("conversation_id")
+  messageId      String?  @unique @map("message_id")
+  provider       String
+  model          String
+  latencyMs      Int      @map("latency_ms")
+  inputTokens    Int      @default(0) @map("input_tokens")
+  outputTokens   Int      @default(0) @map("output_tokens")
+  status         String   @default("success")
+  errorMessage   String?  @map("error_message")
+  inputPreview   String?  @map("input_preview")
+  outputPreview  String?  @map("output_preview")
+  costUsd   Decimal? @default(0) @map("cost_usd") @db.Decimal(10, 8)
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  conversation Conversation? @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+  message      Message?      @relation(fields: [messageId], references: [id], onDelete: SetNull)
+  piiAudit     PiiAudit?
+
+  @@map("inference_logs")
+}
+
+model PiiAudit {
+  id             String   @id @default(uuid())
+  inferenceLogId String   @unique @map("inference_log_id")
+  piiTypesFound  String[] @map("pii_types_found")
+  redactionCount Int      @default(0) @map("redaction_count")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  inferenceLog InferenceLog @relation(fields: [inferenceLogId], references: [id], onDelete: Cascade)
+
+  @@map("pii_audit")
+}
