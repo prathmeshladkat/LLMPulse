@@ -7,6 +7,4 @@ scrape_configs:
     static_configs:
       - targets: ['host.docker.internal:3001']  # host.docker.internal = your Windows machine from Docker
 
-  - job_name: 'ingestion-api'
-    static_configs:
-      - targets: ['host.docker.internal:8000']
+  

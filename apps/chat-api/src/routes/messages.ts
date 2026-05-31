@@ -76,7 +76,7 @@ router.post('/:id/messages', async (req: Request<{ id: string }>, res: Response)
     const assistantMessage = await saveMessage(conversationId, 'assistant', fullResponse)
 
     // Save inference log to DB
-    await saveInferenceLog({
+    {/*await saveInferenceLog({
       conversationId,
       messageId:    assistantMessage.id,
       provider:     result.log.provider,
@@ -87,7 +87,7 @@ router.post('/:id/messages', async (req: Request<{ id: string }>, res: Response)
       status:       result.log.status,
       inputPreview:  result.log.inputPreview,
       outputPreview: result.log.outputPreview,
-    })
+    })*/}
 
     // Record metrics for Prometheus
     llmRequestsTotal.inc({

@@ -31,7 +31,7 @@ export default function LandingPage() {
               variant="outline"
               className="bg-transparent border-white/15 text-zinc-300 hover:bg-white/5 hover:text-white hover:border-white/25 rounded-lg text-[13.5px] font-medium px-[18px] h-9 w-36 transition-all"
             >
-              Launch App
+              Get Started
             </Button>
           </Link>
 

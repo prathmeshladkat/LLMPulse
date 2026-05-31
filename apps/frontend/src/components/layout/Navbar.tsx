@@ -21,8 +21,8 @@ export default function Navbar() {
         <Link to="/chat">
           <Button
             variant={location.pathname === '/chat' ? 'default' : 'ghost'}
-            size="sm"
-            style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
+            size="lg"
+            style={{ display: 'flex', alignItems: 'center',width: '120px', gap: '6px' }}
           >
             <MessageSquare size={15} />
             Chat
@@ -31,8 +31,8 @@ export default function Navbar() {
         <Link to="/dashboard">
           <Button
             variant={location.pathname === '/dashboard' ? 'default' : 'ghost'}
-            size="sm"
-            style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
+            size="lg"
+            style={{ display: 'flex', alignItems: 'center',width: '120px', gap: '6px' }}
           >
             <BarChart2 size={15} />
             Dashboard
